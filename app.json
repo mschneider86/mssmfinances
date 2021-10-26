@@ -1,0 +1,12 @@
+{
+  "name": "mssmfinances",
+  "displayName": "mssmfinances",
+  "expo": {
+    "name": "mssmfinances",
+    "slug": "mssmfinances",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
