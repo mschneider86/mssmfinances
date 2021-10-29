@@ -8,6 +8,7 @@ import { TransactionTypeButton } from '../../../components/Forms/TransactionType
 import { CategorySelectButton } from '../../../components/Forms/CategorySelectButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native';
 
 import { CategorySelect } from '../CategorySelect';
 
@@ -30,6 +31,8 @@ interface FormData {
   amount: string;
 }
 
+const navigation = useNavigation();
+
 const dataKey = '@mssmfinances:transactions';
 
 const schema = Yup.object().shape({
@@ -46,6 +49,7 @@ export function Register() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -87,7 +91,16 @@ export function Register() {
 
       const formattedData = [...currentData, newTransaction];
 
-      AsyncStorage.setItem(dataKey, JSON.stringify(formattedData));
+      await AsyncStorage.setItem(dataKey, JSON.stringify(formattedData));
+
+      reset();
+      setTransactionType('');
+      setCategory({
+        key: 'category',
+        name: 'Categoria',
+      });
+
+      navigation.navigate('Listagem');
     } catch (error) {
       console.log(error);
       Alert.alert('Erro ao salvar o registro');
