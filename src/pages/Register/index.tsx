@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import { InputForm } from '../../../components/InputForm';
@@ -32,8 +32,6 @@ interface FormData {
 }
 
 const navigation = useNavigation();
-
-const dataKey = '@mssmfinances:transactions';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome obrigatório'),
@@ -86,6 +84,8 @@ export function Register() {
     };
 
     try {
+      const dataKey = '@mssmfinances:transactions';
+
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
