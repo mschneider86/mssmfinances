@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import { InputForm } from '../../../components/InputForm';
@@ -6,6 +6,8 @@ import { InputForm } from '../../../components/InputForm';
 import { Button } from '../../../components/Forms/Button';
 import { TransactionTypeButton } from '../../../components/Forms/TransactionTypeButton';
 import { CategorySelectButton } from '../../../components/Forms/CategorySelectButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 import { CategorySelect } from '../CategorySelect';
 
@@ -27,6 +29,8 @@ interface FormData {
   name: string;
   amount: string;
 }
+
+const dataKey = '@mssmfinances:transactions';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome obrigatório'),
@@ -62,20 +66,32 @@ export function Register() {
     setCategoryModalOpen(false);
   }
 
-  function handleRegister(form: FormData) {
+  async function handleRegister(form: FormData) {
     if (!transactionType) return Alert.alert('Selecione o tipo da transação');
 
     if (category.key === 'category')
       return Alert.alert('Selecione a categoria');
 
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       transactionType,
       category: category.key,
+      date: new Date(),
     };
 
-    console.log(data);
+    try {
+      const data = await AsyncStorage.getItem(dataKey);
+      const currentData = data ? JSON.parse(data) : [];
+
+      const formattedData = [...currentData, newTransaction];
+
+      AsyncStorage.setItem(dataKey, JSON.stringify(formattedData));
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro ao salvar o registro');
+    }
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
