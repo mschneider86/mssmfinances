@@ -9,6 +9,8 @@ import { TransactionCardProps } from '../../../components/TransactionCard';
 import { categories } from '../../utils/categories';
 
 import { RFValue } from 'react-native-responsive-fontsize';
+
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
 
 interface CategoryProps {
@@ -86,7 +88,24 @@ export function Summary() {
         <Title>Resumo por Categoria</Title>
       </Header>
 
-      <Content>
+      <Content
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
+        {/* <MonthSelect>
+          <MonthSelectButton />
+          <SelectIcon />
+          <Previous />
+
+          <Month></Month>
+          <MonthSelectButton />
+          <SelectIcon />
+          <Previous />
+        </MonthSelect> */}
+
         <ChartContainer>
           <VictoryPie
             data={totalByCategories}
