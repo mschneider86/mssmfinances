@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
-import { InputForm } from '../../../components/InputForm';
+import { InputForm } from '../../components/Forms/InputForm';
 
-import { Button } from '../../../components/Forms/Button';
-import { TransactionTypeButton } from '../../../components/Forms/TransactionTypeButton';
-import { CategorySelectButton } from '../../../components/Forms/CategorySelectButton';
+import { Button } from '../../components/Forms/Button';
+import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
+import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
@@ -31,8 +31,6 @@ interface FormData {
   amount: string;
 }
 
-const navigation = useNavigation();
-
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome obrigatório'),
   amount: Yup.number()
@@ -43,6 +41,8 @@ const schema = Yup.object().shape({
 export function Register() {
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+  const navigation = useNavigation();
 
   const {
     control,

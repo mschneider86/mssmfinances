@@ -13,14 +13,16 @@ import { DataListProps } from '.';
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
-
-  margin-right: 16px;
 `;
 
 export const Header = styled.View`
   width: 100%;
   height: ${RFPercentage(42)}px;
   background-color: ${({ theme }) => theme.colors.primary};
+
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
 `;
 
 export const UserWrapper = styled.View`

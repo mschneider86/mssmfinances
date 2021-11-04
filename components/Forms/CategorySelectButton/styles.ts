@@ -15,7 +15,7 @@ export const Container = styled(RectButton).attrs({
   padding: 18px 16px;
 `;
 
-export const Category = styled.View`
+export const Category = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(14)}px;
 `;

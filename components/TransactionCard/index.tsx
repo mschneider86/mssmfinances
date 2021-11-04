@@ -1,5 +1,5 @@
 import React from 'react';
-import { categories } from '../../src/utils/categories';
+import { categories } from '../../utils/categories';
 import {
   Container,
   Title,

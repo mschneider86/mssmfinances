@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VictoryPie } from 'victory-native';
 
-import { HistoryCard } from '../../../components/HistoryCard';
+import { HistoryCard } from '../../components/HistoryCard';
 
 import { Container, Header, Title, Content, ChartContainer } from './styles';
-import { TransactionCardProps } from '../../../components/TransactionCard';
+import { TransactionCardProps } from '../../components/TransactionCard';
 import { categories } from '../../utils/categories';
 
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -95,17 +95,6 @@ export function Summary() {
           paddingBottom: useBottomTabBarHeight(),
         }}
       >
-        {/* <MonthSelect>
-          <MonthSelectButton />
-          <SelectIcon />
-          <Previous />
-
-          <Month></Month>
-          <MonthSelectButton />
-          <SelectIcon />
-          <Previous />
-        </MonthSelect> */}
-
         <ChartContainer>
           <VictoryPie
             data={totalByCategories}

@@ -3,14 +3,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
-import { HighlightCard } from '../../../components/HighlightCard';
+import { HighlightCard } from '../../components/HighlightCard';
 
 import { ActivityIndicator } from 'react-native';
 
 import {
   TransactionCard,
   TransactionCardProps,
-} from '../../../components/TransactionCard';
+} from '../../components/TransactionCard';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

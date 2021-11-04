@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { categories } from '../../utils/categories';
 
-import { Button } from '../../../components/Forms/Button';
+import { Button } from '../../components/Forms/Button';
 
 import {
   Container,
