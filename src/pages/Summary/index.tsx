@@ -4,7 +4,18 @@ import { VictoryPie } from 'victory-native';
 
 import { HistoryCard } from '../../components/HistoryCard';
 
-import { Container, Header, Title, Content, ChartContainer } from './styles';
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  ChartContainer,
+  MonthSelect,
+  MonthSelectButton,
+  MonthSelectIcon,
+  Month,
+} from './styles';
+
 import { TransactionCardProps } from '../../components/TransactionCard';
 import { categories } from '../../utils/categories';
 
@@ -12,6 +23,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
+import { addMonths, subMonths, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface CategoryProps {
   key: string;
@@ -23,11 +36,21 @@ interface CategoryProps {
 }
 
 export function Summary() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [totalByCategories, setTotalByCategories] = useState<CategoryProps[]>(
     []
   );
 
   const theme = useTheme();
+
+  function handleDateChange(action: 'previous' | 'next') {
+    if (action === 'previous') {
+      setSelectedDate(subMonths(selectedDate, 1));
+    } else {
+      setSelectedDate(addMonths(selectedDate, 1));
+    }
+  }
 
   async function loadData() {
     const dataKey = '@mssmfinances:transactions';
@@ -35,7 +58,10 @@ export function Summary() {
     const formattedResponse = response ? JSON.parse(response) : [];
 
     const expenses = formattedResponse.filter(
-      (expense: TransactionCardProps) => expense.type === 'outcome'
+      (expense: TransactionCardProps) =>
+        expense.type === 'outcome' &&
+        new Date(expense.date).getMonth() === selectedDate.getMonth() &&
+        new Date(expense.date).getFullYear() === selectedDate.getFullYear()
     );
 
     const expensesTotal = expenses.reduce(
@@ -80,7 +106,7 @@ export function Summary() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [selectedDate]);
 
   return (
     <Container>
@@ -95,6 +121,18 @@ export function Summary() {
           paddingBottom: useBottomTabBarHeight(),
         }}
       >
+        <MonthSelect>
+          <MonthSelectButton onPress={() => handleDateChange('previous')}>
+            <MonthSelectIcon name='chevron-left' />
+          </MonthSelectButton>
+
+          <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
+
+          <MonthSelectButton onPress={() => handleDateChange('next')}>
+            <MonthSelectIcon name='chevron-right' />
+          </MonthSelectButton>
+        </MonthSelect>
+
         <ChartContainer>
           <VictoryPie
             data={totalByCategories}
