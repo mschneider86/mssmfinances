@@ -41,7 +41,7 @@ interface CategoryProps {
 }
 
 export function Summary() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -51,19 +51,13 @@ export function Summary() {
 
   const theme = useTheme();
 
-  useEffect(() => {
-    loadData();
-  }, [selectedDate]);
-
   useFocusEffect(
     useCallback(() => {
       loadData();
-    }, [])
+    }, [selectedDate])
   );
 
   function handleDateChange(action: 'previous' | 'next') {
-    setIsLoading(true);
-
     if (action === 'previous') {
       setSelectedDate(subMonths(selectedDate, 1));
     } else {
@@ -72,6 +66,7 @@ export function Summary() {
   }
 
   async function loadData() {
+    setIsLoading(true);
     const dataKey = '@mssmfinances:transactions';
     const response = await AsyncStorage.getItem(dataKey);
     const formattedResponse = response ? JSON.parse(response) : [];
