@@ -4,9 +4,8 @@
   "expo": {
     "name": "mssmfinances",
     "slug": "mssmfinances",
+    "schema": "mssmfinances",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }
