@@ -31,6 +31,7 @@ import {
   TransactionList,
   LoadContainer,
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
@@ -56,6 +57,7 @@ export function Dashboard() {
   );
 
   const theme = useTheme();
+  const { signOut } = useAuth();
 
   function getLastTransactionDate(
     collection: DataListProps[],
@@ -184,7 +186,7 @@ export function Dashboard() {
                 </User>
               </UserInfo>
 
-              <LogoutButton onPress={() => {}}>
+              <LogoutButton onPress={signOut}>
                 <Icon name='power' />
               </LogoutButton>
             </UserWrapper>
