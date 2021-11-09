@@ -25,6 +25,7 @@ import {
   Fields,
   TransactionTypes,
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 interface FormData {
   name: string;
@@ -42,6 +43,8 @@ const schema = Yup.object().shape({
 export function Register() {
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+  const { user } = useAuth();
 
   const navigation = useNavigation();
 
@@ -85,7 +88,7 @@ export function Register() {
     };
 
     try {
-      const dataKey = '@mssmfinances:transactions';
+      const dataKey = `@mssmfinances:transactions_user:${user.id}`;
 
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];

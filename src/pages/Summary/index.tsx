@@ -30,6 +30,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
 import { addMonths, subMonths, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useAuth } from '../../hooks/auth';
 
 interface CategoryProps {
   key: string;
@@ -50,6 +51,7 @@ export function Summary() {
   );
 
   const theme = useTheme();
+  const { user } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
@@ -67,7 +69,7 @@ export function Summary() {
 
   async function loadData() {
     setIsLoading(true);
-    const dataKey = '@mssmfinances:transactions';
+    const dataKey = `@mssmfinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const formattedResponse = response ? JSON.parse(response) : [];
 
