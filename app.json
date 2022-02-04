@@ -1,11 +1,21 @@
 {
-  "name": "mssmfinances",
-  "displayName": "mssmfinances",
+  "name": "gofinances",
+  "displayName": "gofinances",
+
   "expo": {
-    "name": "mssmfinances",
-    "slug": "mssmfinances",
-    "schema": "mssmfinances",
+    "name": "gofinances",
+    "slug": "gofinances",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "schema": "gofinances",
+    "icon": "./assets/logo.png",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "br.com.gofinances",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "br.com.gofinances",
+      "versionCode": 1
+    }
   }
 }
